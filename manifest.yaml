@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Plugin
+metadata:
+  author: hello-2066
+  name: ContextKeeper
+  repository: 'https://github.com/hello-2066/ContextKeeper'
+  version: 1.2.2
+  # 关键：必须显式指定图标，且确保 assets/icon.png 文件真实存在
+  icon: assets/icon.png
+  label:
+    en_US: ContextKeeper
+    zh_Hans: 上下文守护者
+  description:
+    en_US: Persist conversation context.
+    zh_Hans: 解决重启失忆问题。
+
+spec:
+  config:
+    - name: max_history_rounds
+      type: integer
+      default: 20
+      required: false
+      label:
+        zh_Hans: 最大历史记录数
+        en_US: Max History Rounds
+      description:
+        zh_Hans: 设置保留最近多少轮对话作为上下文（建议 10-50，过大可能消耗过多 Token）。
+        en_US: Number of recent conversation rounds to keep.
+  components:
+    EventListener:           # 类型名称，注意大小写
+      fromDirs:
+        - path: components/event_listener  # 扫描这个目录
+
+
+execution:
+  python:
+    path: main.py
+    attr: ContextKeeperPlugin

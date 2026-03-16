@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: EventListener          # 关键：必须声明类型
+metadata:
+  name: history_logic        # 组件的唯一标识名
+  label:
+    en_US: Context Keeper Logic
+    zh_Hans: 上下文记录逻辑
+  description:
+    en_US: Logic for persisting conversation context.
+    zh_Hans: 用于持久化保存对话上下文的逻辑组件。
+spec:
+  config: 
+    - name: max_history_rounds
+      type: integer
+      default: 20
+      label:
+        zh_Hans: 最大历史保留轮数
+        en_US: Max History Rounds
+      description:
+        zh_Hans: 设置上下文记忆保留的对话轮数（默认20）
+execution:
+  python:
+    path: main.py            # 指向同目录下的代码文件
+    attr: HistoryLogic       # 指向 main.py 中的类名
